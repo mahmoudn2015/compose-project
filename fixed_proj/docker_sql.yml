@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  
+  mysql-flask-app-container:
+    image: mysql
+    container_name: mysql-flask-app-container
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=Abc@123456789
+    networks:
+      - mysql-python-app-network
+  python-flask-app-container:
+    image: 95osama123/fixed_task:1.0
+    container_name: python-flask-app-container
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - mysql-python-app-network
+    environment:
+      DB_HOST: localhost
+      DB_USER: root
+      DB_PASS: password
+      DB_NAME: test
+
+networks:
+  mysql-python-app-network:
+    driver: bridge

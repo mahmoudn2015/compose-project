@@ -1,0 +1,38 @@
+version: '3.3'
+
+networks:
+  nginx-proxy:
+    external: false
+    # name: nginx-proxy
+
+services:
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+      # MYSQL_DATABASE: 'crud-application'
+    ports:
+    - 8082:3306
+
+  # python-app:
+    # image: 95osama123/fixed_task:1.0
+    # ports:
+      # - "8090:3306"
+    # restart: always
+    # networks:
+      # - nginx-proxy
+    # depends_on:
+      # - db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    container_name: php-my-admin
+    ports:
+    - 8081:80
+    environment:
+      - PMA_ARBITRARY=1        
